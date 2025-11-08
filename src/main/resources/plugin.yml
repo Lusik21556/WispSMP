@@ -1,0 +1,24 @@
+name: wispsmp
+version: '1.0-SNAPSHOT'
+main: me.Lusik21556.wispsmp.WispSMP
+api-version: '1.21'
+authors: [ Lusik21556 ]
+description: WispSMP Remake made by (@lusik_2155)
+website: https://github.com/Lusik21556
+
+commands:
+  revive:
+    description: Revive a player and restore their lives
+    usage: /<command> <player>
+    permission: wispsmp.revive
+    aliases: [res, restore]
+
+permissions:
+  wispsmp.revive:
+    description: Allows reviving players
+    default: op
+  wispsmp.*:
+    description: Grants all WispSMP permissions
+    default: op
+    children:
+      wispsmp.revive: true
