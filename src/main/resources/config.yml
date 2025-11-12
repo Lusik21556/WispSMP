@@ -1,5 +1,12 @@
 # WispSMP Configuration File
 
+# Maximum lives a player can have
+max-lives: 3
+
+# Ban system configuration
+use-ban-system: false  # Set to true to ban players instead of spectator mode
+ban-message: "§cYou have run out of lives and have been banned from the server!"
+
 # Spawn location for revived players
 spawn:
   world: "world"  # Change this to your world name

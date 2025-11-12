@@ -45,4 +45,12 @@ public class ConfigManager {
     public int getMaxLives() {
         return config.getInt("max-lives", 3);
     }
+
+    public boolean useBanSystem() {
+        return config.getBoolean("use-ban-system", false);
+    }
+
+    public String getBanMessage() {
+        return config.getString("ban-message", "§cYou have run out of lives and have been banned from the server!");
+    }
 }

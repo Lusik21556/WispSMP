@@ -1,6 +1,7 @@
 package me.Lusik21556.wispsmp.commands;
 
 import me.Lusik21556.wispsmp.WispSMP;
+import me.Lusik21556.wispsmp.managers.BanManager;
 import me.Lusik21556.wispsmp.managers.ConfigManager;
 import me.Lusik21556.wispsmp.managers.LivesManager;
 import me.Lusik21556.wispsmp.managers.NametagManager;
@@ -19,12 +20,14 @@ public class ReviveCommand implements CommandExecutor {
     private final LivesManager livesManager;
     private final NametagManager nametagManager;
     private final ConfigManager configManager;
+    private final BanManager banManager;
 
     public ReviveCommand(WispSMP plugin) {
         this.plugin = plugin;
         this.livesManager = plugin.getLivesManager();
         this.nametagManager = plugin.getNametagManager();
         this.configManager = plugin.getConfigManager();
+        this.banManager = plugin.getBanManager();
     }
 
     @Override
@@ -39,17 +42,22 @@ public class ReviveCommand implements CommandExecutor {
             return true;
         }
 
-        Player target = Bukkit.getPlayer(args[0]);
+        String targetName = args[0];
 
-        if (target == null) {
-            sender.sendMessage(ChatColor.RED + "Player not found!");
-            return true;
+        if (banManager.isBanned(targetName)) {
+            banManager.unbanPlayer(targetName);
+            sender.sendMessage(ChatColor.GREEN + "Unbanned " + targetName + "!");
         }
 
-        revivePlayer(target);
+        Player target = Bukkit.getPlayer(targetName);
 
-        sender.sendMessage(ChatColor.GREEN + "Revived " + target.getName() + "!");
-        target.sendMessage(ChatColor.GREEN + "You have been revived!");
+        if (target != null) {
+            revivePlayer(target);
+            sender.sendMessage(ChatColor.GREEN + "Revived " + target.getName() + "!");
+            target.sendMessage(ChatColor.GREEN + "You have been revived!");
+        } else {
+            sender.sendMessage(ChatColor.YELLOW + "Player is offline, but has been unbanned and will be revived on next join.");
+        }
 
         return true;
     }

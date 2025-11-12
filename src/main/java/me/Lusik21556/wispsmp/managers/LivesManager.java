@@ -10,10 +10,12 @@ public class LivesManager {
 
     private final WispSMP plugin;
     private final ConfigManager configManager;
+    private final BanManager banManager;
 
     public LivesManager(WispSMP plugin) {
         this.plugin = plugin;
         this.configManager = plugin.getConfigManager();
+        this.banManager = plugin.getBanManager();
     }
 
     public int getLives(Player player) {
@@ -48,7 +50,12 @@ public class LivesManager {
         decrementLives(player);
 
         if (!hasLives(player)) {
-            player.setGameMode(GameMode.SPECTATOR);
+            if (configManager.useBanSystem()) {
+                String banMessage = configManager.getBanMessage();
+                banManager.banPlayer(player, banMessage);
+            } else {
+                player.setGameMode(GameMode.SPECTATOR);
+            }
         }
     }
 }
