@@ -2,6 +2,7 @@ package me.Lusik21556.wispsmp;
 
 import me.Lusik21556.wispsmp.commands.ReviveCommand;
 import me.Lusik21556.wispsmp.listeners.PlayerListener;
+import me.Lusik21556.wispsmp.managers.BanManager;
 import me.Lusik21556.wispsmp.managers.ConfigManager;
 import me.Lusik21556.wispsmp.managers.LivesManager;
 import me.Lusik21556.wispsmp.managers.NametagManager;
@@ -14,6 +15,7 @@ public class WispSMP extends JavaPlugin {
     private ConfigManager configManager;
     private LivesManager livesManager;
     private NametagManager nametagManager;
+    private BanManager banManager;
 
     @Override
     public void onEnable() {
@@ -49,6 +51,7 @@ public class WispSMP extends JavaPlugin {
 
     private void initializeManagers() {
         configManager = new ConfigManager(this);
+        banManager = new BanManager(this);
         livesManager = new LivesManager(this);
         nametagManager = new NametagManager(this);
     }
@@ -75,5 +78,9 @@ public class WispSMP extends JavaPlugin {
 
     public NametagManager getNametagManager() {
         return nametagManager;
+    }
+
+    public BanManager getBanManager() {
+        return banManager;
     }
 }
